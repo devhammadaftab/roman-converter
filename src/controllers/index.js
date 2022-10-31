@@ -7,7 +7,7 @@ const convert = (numerals) => {
 
     function repeatRoman(romanKey, numberOfTimes) { // Repeatation on roman keys will be handled here by passing params of need.
         let repeatedRoman = ""
-        for(var i = 1; i <= numberOfTimes; i++) {
+        for (var i = 1; i <= numberOfTimes; i++) {
             repeatedRoman = repeatedRoman + romanKey
         }
         return repeatedRoman
@@ -17,16 +17,14 @@ const convert = (numerals) => {
         let length = arr.length;
         let index = 2 * (length - 1 - i); // Index of roman set.
         let currentRoman; // Current Pointing Roman based on digits.
-        if(Number(digit) >= 4) { // Making a logic to determine the equal to below or above the 4 number line and assigning appropriate calculations.
-            if(Number(digit) === 4) {
-                currentRoman = romanRange[index] + romanRange[index + 1];
-            }
-            else {
-                currentRoman = romanRange[index + 1] + repeatRoman(romanRange[index], Number(digit) - 5);
-            }
+
+        // Making a logic to determine the equal to below or above the 4 number line and assigning appropriate calculations.
+        let romanIndex = Math.floor((Number(digit) + 1) / 5);
+        if ((Number(digit) + 1) % 5 === 0) {
+            currentRoman = romanRange[index] + romanRange[index + romanIndex];
         }
         else {
-            currentRoman = repeatRoman(romanRange[index], Number(digit))
+            currentRoman = romanIndex ? romanRange[index + romanIndex] + repeatRoman(romanRange[index], Number(digit) - 5) : repeatRoman(romanRange[index], Number(digit));
         }
         roman = roman + currentRoman;
     })
